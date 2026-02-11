@@ -1,0 +1,330 @@
+TOWER OF HANOI
+
+def tower_of_hanoi(n, source, target, auxiliary):
+    if n > 0:
+        # Move n-1 disks from source to auxiliary
+        tower_of_hanoi(n - 1, source, auxiliary, target)
+        
+        # Move the largest disk from source to target
+        print(f"Move disk {n} from {source} to {target}")
+        
+        # Move n-1 disks from auxiliary to target
+        tower_of_hanoi(n - 1, auxiliary, target, source)
+
+# Example usage for 3 disks
+n = 3
+tower_of_hanoi(n, 'A', 'C', 'B')
+
+
+
+
+
+
+
+
+
+
+
+TIC TAC TOE
+
+theBoard = {'7': ' ', '8': ' ', '9': ' ',
+            '4': ' ', '5': ' ', '6': ' ',
+            '1': ' ', '2': ' ', '3': ' '}
+
+board_keys = []
+
+for key in theBoard:
+    board_keys.append(key)
+
+
+def printBoard(board):
+    print(board['7'] + '|' + board['8'] + '|' + board['9'])
+    print('-+-+-')
+    print(board['4'] + '|' + board['5'] + '|' + board['6'])
+    print('-+-+-')
+    print(board['1'] + '|' + board['2'] + '|' + board['3'])
+
+
+def game():
+    turn = 'X'
+    count = 0
+
+    for i in range(10):
+        printBoard(theBoard)
+        print("It's your turn, " + turn + ". Move to which place? (1-9)")
+
+        move = input().strip()
+
+     
+        if move not in theBoard:
+            print("Invalid position! Use keys 1-9.")
+            continue
+
+        if theBoard[move] == ' ':
+            theBoard[move] = turn
+            count += 1
+        else:
+            print("That place is already filled. Move to which place?")
+            continue
+
+    
+        if count >= 5:
+           
+            if theBoard['7'] == theBoard['8'] == theBoard['9'] != ' ':
+                printBoard(theBoard)
+                print("\nGame Over.\n")
+                print("***** " + turn + " won! *****")
+                break
+            elif theBoard['4'] == theBoard['5'] == theBoard['6'] != ' ':
+                printBoard(theBoard)
+                print("\nGame Over.\n")
+                print("***** " + turn + " won! *****")
+                break
+            elif theBoard['1'] == theBoard['2'] == theBoard['3'] != ' ':
+                printBoard(theBoard)
+                print("\nGame Over.\n")
+                print("***** " + turn + " won! *****")
+                break
+            elif theBoard['1'] == theBoard['4'] == theBoard['7'] != ' ':
+                printBoard(theBoard)
+                print("\nGame Over.\n")
+                print("***** " + turn + " won! *****")
+                break
+            elif theBoard['2'] == theBoard['5'] == theBoard['8'] != ' ':
+                printBoard(theBoard)
+                print("\nGame Over.\n")
+                print("***** " + turn + " won! *****")
+                break
+            elif theBoard['3'] == theBoard['6'] == theBoard['9'] != ' ':
+                printBoard(theBoard)
+                print("\nGame Over.\n")
+                print("***** " + turn + " won! *****")
+                break
+            elif theBoard['7'] == theBoard['5'] == theBoard['3'] != ' ':
+                printBoard(theBoard)
+                print("\nGame Over.\n")
+                print("***** " + turn + " won! *****")
+                break
+            elif theBoard['1'] == theBoard['5'] == theBoard['9'] != ' ':
+                printBoard(theBoard)
+                print("\nGame Over.\n")
+                print("***** " + turn + " won! *****")
+                break
+
+      
+        if count == 9:
+            printBoard(theBoard)
+            print("\nGame Over.\n")
+            print("It's a Tie!")
+            break
+
+       
+        if turn == 'X':
+            turn = 'O'
+        else:
+            turn = 'X'
+
+ 
+    restart = input("Do you want to play again? (y/n): ").lower()
+    if restart == "y":
+       
+        for key in board_keys:
+            theBoard[key] = ' '
+        game()
+
+if __name__=="__main__":
+ game()
+
+
+
+
+
+
+
+
+
+
+
+WATER JUG
+
+a = int(input("Enter Jug A Capacity: "))
+b = int(input("Enter Jug B Capacity: "))
+ai = int(input("Initially Water in Jug A: "))
+bi = int(input("Initially Water in Jug B: "))
+af = int(input("Final State of Jug A: "))
+bf = int(input("Final State of Jug B: "))
+
+print("List Of Operations You can Do:\n")
+print("1. Fill Jug A Completely")
+print("2. Fill Jug B Completely")
+print("3. Empty Jug A Completely")
+print("4. Empty Jug B Completely")
+print("5. Pour From Jug A till Jug B filled Completely or A becomes empty")
+print("6. Pour From Jug B till Jug A filled Completely or B becomes empty")
+print("7. Pour all From Jug B to Jug A")
+print("8. Pour all From Jug A to Jug B")
+
+while (ai != af or bi != bf):
+    op = int(input("Enter the Operation: "))
+
+    if (op == 1):
+        ai = a
+
+    elif (op == 2):
+        bi = b
+
+    elif (op == 3):
+        ai = 0
+
+    elif (op == 4):
+        bi = 0
+
+    elif (op == 5):
+        if (b - bi) > ai:
+            bi = ai + bi
+            ai = 0
+        else:
+            ai = ai - (b - bi)
+            bi = b
+
+    elif (op == 6):
+        if (a - ai) > bi:
+            ai = ai + bi
+            bi = 0
+        else:
+            bi = bi - (a - ai)
+            ai = a
+
+    elif (op == 7):
+        ai = ai + bi
+        bi = 0
+
+    elif (op == 8):
+        bi = bi + ai
+        ai = 0
+
+    print(ai, bi)
+
+
+
+
+NQUEEN 
+
+n = int(input("Enter the value of n: "))
+
+board = [[0 for _ in range(n)] for _ in range(n)]
+
+def printBoard():
+    for row in board:
+        print(" ".join(str(x) for x in row))
+
+def isSafe(row, col):
+      for i in range(row):
+        if board[i][col] == 1:
+            return False
+
+    
+    i, j = row - 1, col - 1
+    while i >= 0 and j >= 0:
+        if board[i][j] == 1:
+            return False
+        i -= 1
+        j -= 1
+
+
+    i, j = row - 1, col + 1
+    while i >= 0 and j < n:
+        if board[i][j] == 1:
+            return False
+        i -= 1
+        j += 1
+
+    return True
+
+def solve(row):
+    if row == n:
+        return True
+
+    for col in range(n):
+        if isSafe(row, col):
+            board[row][col] = 1
+            if solve(row + 1):
+                return True
+            board[row][col] = 0  # backtrack
+
+    return False
+
+solve(0)
+printBoard()
+
+
+FAMILY RELATIONS 
+
+# Gender sets
+female = {"pammi", "lizza", "patty", "anny"}
+male = {"jimmy", "bobby", "tomy", "pitter"}
+
+# Parent-child relationships (parent, child)
+parents = {
+    ("pammi", "bobby"),
+    ("tomy", "bobby"),
+    ("tomy", "lizza"),
+    ("bobby", "anny"),
+    ("bobby", "patty"),
+    ("patty", "jimmy"),
+    ("bobby", "pitter"),
+    ("pitter", "jimmy"),
+}
+
+# Check if x is parent of y
+def is_parent(x, y):
+    return (x, y) in parents
+
+# Check if x is mother of y
+def mother(x, y):
+    return is_parent(x, y) and x in female
+
+# Check if x is father of y
+def father(x, y):
+    return is_parent(x, y) and x in male
+
+# Check if x has at least one child
+def has_child(x):
+    for p, c in parents:
+        if p == x:
+            return True
+    return False
+
+# Check if x is sister of y
+def sister(x, y):
+    if x == y or x not in female:
+        return False
+    for p1, c1 in parents:
+        for p2, c2 in parents:
+            if p1 == p2 and c1 == x and c2 == y:
+                return True
+    return False
+
+# Check if x is brother of y
+def brother(x, y):
+    if x == y or x not in male:
+        return False
+    for p1, c1 in parents:
+        for p2, c2 in parents:
+            if p1 == p2 and c1 == x and c2 == y:
+                return True
+    return False
+
+
+# ---------------- TEST CASES ----------------
+
+print(mother("pammi", "bobby"))    # True
+print(father("tomy", "bobby"))     # True
+print(sister("patty", "anny"))     # True
+print(brother("pitter", "jimmy"))  # False
+print(has_child("bobby"))          # True
+
+
+
+
+
